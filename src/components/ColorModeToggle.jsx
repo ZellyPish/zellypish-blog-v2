@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
+import { jsx } from "theme-ui";
 
 // Adapted from: https://codepen.io/aaroniker/pen/KGpXZo and https://github.com/narative/gatsby-theme-novela/blob/714b6209c5bd61b220370e8a7ad84c0b1407946a/%40narative/gatsby-theme-novela/src/components/Navigation/Navigation.Header.tsx
 
@@ -82,6 +82,6 @@ const ColorModeToggle = ({ isDark, toggle }) => (
       />
     </div>
   </button>
-)
+);
 
-export default ColorModeToggle
+export default ColorModeToggle;

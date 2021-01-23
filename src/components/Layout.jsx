@@ -1,21 +1,23 @@
 /** @jsx jsx */
-import React from "react"
-import { Global } from "@emotion/core"
-import { jsx, Container, useColorMode } from "theme-ui"
+import React from "react";
+import { Global } from "@emotion/core";
+import { jsx, Container, useColorMode } from "theme-ui";
 
-import Header from "./Header"
-import Footer from "./Footer"
-import ColorModeToggle from "./ColorModeToggle"
+import Header from "./Header";
+import Footer from "./Footer";
+import ColorModeToggle from "./ColorModeToggle";
+
+export const UserColorMode = React.createContext("dark");
 
 const Layout = ({ children }) => {
-  const [colorMode, setColorMode] = useColorMode()
-  const isDark = colorMode === `dark`
+  const [colorMode, setColorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
   const toggleColorMode = e => {
-    e.preventDefault()
-    setColorMode(isDark ? `light` : `dark`)
-  }
+    e.preventDefault();
+    setColorMode(isDark ? `light` : `dark`);
+  };
   return (
-    <React.Fragment>
+    <UserColorMode.Provider value={colorMode}>
       <Global
         styles={theme => ({
           "*": {
@@ -51,8 +53,8 @@ const Layout = ({ children }) => {
       <Container>{children}</Container>
       <Footer />
       <ColorModeToggle isDark={isDark} toggle={toggleColorMode} />
-    </React.Fragment>
-  )
-}
+    </UserColorMode.Provider>
+  );
+};
 
-export default Layout
+export default Layout;
