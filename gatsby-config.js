@@ -27,6 +27,13 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "pages",
+        path: `${__dirname}/contents/pages`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
@@ -102,4 +109,4 @@ module.exports = {
       },
     },
   ].filter(Boolean),
-}
+};

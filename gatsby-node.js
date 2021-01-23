@@ -25,7 +25,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   const basePath = `/`;
 
   const slugify = source => {
-    const slug = source.slug ? source.slug : kebabCase(source.title);
+    const slug = kebabCase(source.title);
 
     return `/${basePath}/${slug}`.replace(/\/\/+/g, `/`);
   };
@@ -52,6 +52,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   });
 
   createTypes(`
+
     type PostTag {
       name: String
       slug: String
@@ -79,6 +80,7 @@ exports.onCreateNode = ({
   const { createNode, createParentChildLink } = actions;
 
   const postsPath = `contents/posts/`;
+  const pagesPath = `contents/pages/`;
 
   // Make sure that it's an MDX node
   if (node.internal.type !== `Mdx`) {
@@ -130,16 +132,40 @@ exports.onCreateNode = ({
 
     createParentChildLink({ parent: node, child: getNode(mdxPostId) });
   }
+
+  if (node.internal.type === `Mdx` && source === pagesPath) {
+    const fieldData = {
+      title: node.frontmatter.title,
+      slug: node.frontmatter.slug,
+    };
+
+    const mdxPageId = createNodeId(`${node.id} >>> MdxPage`);
+
+    createNode({
+      ...fieldData,
+      // Required fields
+      id: mdxPageId,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `MdxPage`,
+        contentDigest: createContentDigest(fieldData),
+        content: JSON.stringify(fieldData),
+        description: `Mdx implementation of the Page interface`,
+      },
+    });
+
+    createParentChildLink({ parent: node, child: getNode(mdxPageId) });
+  }
 };
 
 // These template are only data-fetching wrappers that import components
-const homepageTemplate = require.resolve(`./src/templates/homepage-query.jsx`);
-const projectsTemplate = require.resolve(`./src/templates/projects.jsx`);
-const aboutTemplate = require.resolve(`./src/templates/about.jsx`);
-const blogTemplate = require.resolve(`./src/templates/blog-query.jsx`);
-const postTemplate = require.resolve(`./src/templates/post-query.jsx`);
-const tagTemplate = require.resolve(`./src/templates/tag-query.jsx`);
-const tagsTemplate = require.resolve(`./src/templates/tags-query.jsx`);
+const homepageT = require.resolve(`./src/components/homepage.jsx`);
+const blogT = require.resolve(`./src/components/blog.jsx`);
+const postT = require.resolve(`./src/components/post.jsx`);
+const pageT = require.resolve(`./src/components/page.jsx`);
+const tagT = require.resolve(`./src/components/tag.jsx`);
+const tagsT = require.resolve(`./src/components/tags.jsx`);
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
@@ -150,29 +176,29 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   createPage({
     path: basePath,
-    component: homepageTemplate,
+    component: homepageT,
     context: {
       formatString,
     },
   });
-  createPage({
-    path: `/${basePath}/projects/`.replace(/\/\/+/g, `/`),
-    component: projectsTemplate,
-    context: {
-      formatString,
-    },
-  });
-  createPage({
-    path: `/${basePath}/about/`.replace(/\/\/+/g, `/`),
-    component: aboutTemplate,
-    context: {
-      formatString,
-    },
-  });
+  // createPage({
+  //   path: `/${basePath}/projects/`.replace(/\/\/+/g, `/`),
+  //   component: projectsT,
+  //   context: {
+  //     formatString,
+  //   },
+  // });
+  // createPage({
+  //   path: `/${basePath}/about/`.replace(/\/\/+/g, `/`),
+  //   component: aboutT,
+  //   context: {
+  //     formatString,
+  //   },
+  // });
 
   createPage({
     path: `/${basePath}/blog/`.replace(/\/\/+/g, `/`),
-    component: blogTemplate,
+    component: blogT,
     context: {
       formatString,
     },
@@ -180,12 +206,20 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   createPage({
     path: `/${basePath}/tags`.replace(/\/\/+/g, `/`),
-    component: tagsTemplate,
+    component: tagsT,
   });
 
   const result = await graphql(`
     query {
-      allMdx(sort: { fields: frontmatter___date, order: DESC }) {
+      posts: allMdx(
+        sort: { fields: frontmatter___date, order: DESC }
+        filter: { fileAbsolutePath: { regex: "/posts/" } }
+      ) {
+        nodes {
+          slug
+        }
+      }
+      pages: allMdx(filter: { fileAbsolutePath: { regex: "/pages/" } }) {
         nodes {
           slug
         }
@@ -206,17 +240,31 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     return;
   }
 
-  const posts = result.data.allMdx.nodes;
+  const posts = result.data.posts.nodes;
 
   posts.forEach(post => {
     createPage({
       path: `/blog/${post.slug}`.replace(/\/\/+/g, `/`),
-      component: postTemplate,
+      component: postT,
       context: {
         slug: post.slug,
       },
     });
   });
+
+  const pages = result.data.pages.nodes;
+
+  if (pages.length > 0) {
+    pages.forEach(page => {
+      createPage({
+        path: `/${basePath}/${page.slug}`.replace(/\/\/+/g, `/`),
+        component: pageT,
+        context: {
+          slug: page.slug,
+        },
+      });
+    });
+  }
 
   const tags = result.data.tags.group;
 
@@ -227,10 +275,10 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           /\/\/+/g,
           `/`
         ),
-        component: tagTemplate,
+        component: tagT,
         context: {
-          slug: kebabCase(tag.fieldValue),
           name: tag.fieldValue,
+          tag: tag.fieldValue,
         },
       });
     });

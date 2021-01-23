@@ -6,6 +6,7 @@ import { jsx, Container, useColorMode } from "theme-ui";
 import Header from "./Header";
 import Footer from "./Footer";
 import ColorModeToggle from "./ColorModeToggle";
+import { useScrollFadeIn } from "./useScrollEvent";
 
 export const UserColorMode = React.createContext("dark");
 
@@ -16,6 +17,9 @@ const Layout = ({ children }) => {
     e.preventDefault();
     setColorMode(isDark ? `light` : `dark`);
   };
+
+  const animatedPage = useScrollFadeIn("ups", 0.5, 0, 0.01);
+
   return (
     <UserColorMode.Provider value={colorMode}>
       <Global
@@ -50,7 +54,9 @@ const Layout = ({ children }) => {
         })}
       />
       <Header />
-      <Container>{children}</Container>
+      <Container>
+        <div {...animatedPage}>{children}</div>
+      </Container>
       <Footer />
       <ColorModeToggle isDark={isDark} toggle={toggleColorMode} />
     </UserColorMode.Provider>

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, Heading, Box, Link as TLink } from "theme-ui";
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "./Layout";
 import ItemTags from "./itemTags";
@@ -35,7 +35,7 @@ const Post = ({ data: { mdx }, pageContext }) => {
         <time>{mdx.frontmatter.date}</time>
         {mdx.timeToRead && ` — `}
         {mdx.timeToRead && (
-          <span>{Math.round(mdx.timeToRead * 1.8)} min read</span>
+          <span>{Math.ceil(mdx.timeToRead * 1.6)} min read</span>
         )}
       </p>
       {mdx.tags && <ItemTags tags={mdx.tags} />}
@@ -58,5 +58,22 @@ const Post = ({ data: { mdx }, pageContext }) => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query($slug: String!) {
+    mdx(slug: { eq: $slug }) {
+      slug
+      frontmatter {
+        date(formatString: "YYYY.MM.DD")
+        tags
+        title
+      }
+      body
+      excerpt
+      timeToRead
+      tableOfContents(maxDepth: 4)
+    }
+  }
+`;
 
 export default Post;

@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import { jsx, Heading, Flex, Link as TLink } from "theme-ui";
-import { Link, useStaticQuery } from "gatsby";
+import { Link, graphql } from "gatsby";
 import React from "react";
 
 import replaceSlashes from "../utils/replaceSlashes";
@@ -8,28 +9,9 @@ import SEO from "./seo";
 import Layout from "./Layout";
 import Listing from "./Listing";
 
-const Blog = () => {
+const Blog = ({ data }) => {
   const basePath = `/`;
   const tagsPath = `tags/`;
-
-  const data = useStaticQuery(
-    graphql`
-      query {
-        allMdx(sort: { fields: frontmatter___date, order: DESC }) {
-          nodes {
-            frontmatter {
-              title
-              tags
-              date(formatString: "YYYY.MM.D")
-            }
-            slug
-            excerpt
-            timeToRead
-          }
-        }
-      }
-    `
-  );
 
   const posts = data.allMdx.nodes;
 
@@ -58,5 +40,25 @@ const Blog = () => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query {
+    allMdx(
+      sort: { fields: frontmatter___date, order: DESC }
+      filter: { fileAbsolutePath: { regex: "/posts/" } }
+    ) {
+      nodes {
+        frontmatter {
+          title
+          tags
+          date(formatString: "YYYY.MM.D")
+        }
+        slug
+        excerpt
+        timeToRead
+      }
+    }
+  }
+`;
 
 export default Blog;

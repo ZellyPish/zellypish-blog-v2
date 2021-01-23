@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { jsx, Flex, Image, Box } from "theme-ui"
-import Typewriter from "typewriter-effect"
+import { jsx, Flex, Image, Box } from "theme-ui";
+import Typewriter from "typewriter-effect";
 
-import "./Visual.css"
+import "./Visual.css";
 
 const Visual = () => {
   return (
@@ -63,7 +63,7 @@ const Visual = () => {
         />
       </Box>
     </Flex>
-  )
-}
+  );
+};
 
-export default Visual
+export default Visual;

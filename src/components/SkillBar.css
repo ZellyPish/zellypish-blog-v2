@@ -1,0 +1,34 @@
+@keyframes load {
+  from {
+    width: 0%;
+  }
+}
+@-webkit-keyframes load {
+  from {
+    width: 0%;
+  }
+}
+@-moz-keyframes load {
+  from {
+    width: 0%;
+  }
+}
+@-o-keyframes load {
+  from {
+    width: 0%;
+  }
+}
+
+.bar {
+  background-color: #eee;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  height: 2.2rem;
+  font-weight: bold;
+  width: 90%;
+  display: relative;
+}
+.bar > div:first-child {
+  display: block;
+  border-radius: inherit;
+}

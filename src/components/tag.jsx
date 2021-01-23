@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Heading, Link as TLink } from "theme-ui";
 import { Flex } from "@theme-ui/components";
-import { Link, useStaticQuery } from "gatsby";
+import { Link, graphql } from "gatsby";
 
 import replaceSlashes from "../utils/replaceSlashes";
 
@@ -9,13 +9,15 @@ import Layout from "./Layout";
 import SEO from "./seo";
 import Listing from "./Listing";
 
-const Tag = ({ posts, pageContext }) => {
+const Tag = ({ data, pageContext }) => {
   const basePath = `/`;
   const tagsPath = `tags/`;
 
+  const posts = data.allMdx.nodes;
+
   return (
     <Layout>
-      <SEO title={`Tag: ${pageContext.name}`} />
+      <SEO title={`${pageContext.name}`} />
       <Flex
         sx={{
           alignItems: `center`,
@@ -38,5 +40,25 @@ const Tag = ({ posts, pageContext }) => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query($tag: [String]) {
+    allMdx(
+      sort: { fields: frontmatter___date, order: DESC }
+      filter: { frontmatter: { tags: { in: $tag } } }
+    ) {
+      nodes {
+        frontmatter {
+          title
+          tags
+          date(formatString: "YYYY.MM.DD")
+        }
+        slug
+        excerpt
+        timeToRead
+      }
+    }
+  }
+`;
 
 export default Tag;

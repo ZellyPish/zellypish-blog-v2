@@ -2,7 +2,7 @@
 import { jsx, Link as TLink, Heading } from "theme-ui";
 import { Box, Flex } from "@theme-ui/components";
 import kebabCase from "lodash.kebabcase";
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 import Layout from "./Layout";
 import SEO from "./seo";
 import replaceSlashes from "../utils/replaceSlashes";
@@ -40,5 +40,16 @@ const Tags = ({ list }) => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query {
+    allMdx(sort: { fields: frontmatter___tags, order: DESC }) {
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
+      }
+    }
+  }
+`;
 
 export default Tags;

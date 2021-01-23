@@ -29,10 +29,12 @@ module.exports = title => ({
       },
       query: `
         {
-          allPost(sort: { fields: date, order: DESC }) {
+          allMdx(sort: { fields: date, order: DESC }, filter: { fileAbsolutePath: { regex: "/posts/" } }) {
             nodes {
-              title
-              date(formatString: "MMMM D, YYYY")
+              frontmatter {
+                title
+                date(formatString: "MMMM D, YYYY")
+              }
               excerpt
               slug
               html

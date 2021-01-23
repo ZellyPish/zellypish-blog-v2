@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import React from "react";
 import { jsx, Link as TLink } from "theme-ui";
 import { Box } from "@theme-ui/components";
 import { Link } from "gatsby";
