@@ -8,6 +8,8 @@ import Footer from "./Footer";
 import ColorModeToggle from "./ColorModeToggle";
 import { useScrollFadeIn } from "./useScrollEvent";
 
+import "../styles/index.css";
+
 export const UserColorMode = React.createContext("dark");
 
 const Layout = ({ children }) => {

@@ -12,6 +12,7 @@ const Visual = () => {
         justifyContent: `space-between`,
         flexWrap: `wrap`,
         mb: `5vh`,
+        minHeight: [`90vh`, `90vh`],
         position: `relative`,
       }}
     >

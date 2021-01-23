@@ -216,6 +216,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         filter: { fileAbsolutePath: { regex: "/posts/" } }
       ) {
         nodes {
+          frontmatter {
+            title
+          }
           slug
         }
       }
@@ -242,12 +245,15 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const posts = result.data.posts.nodes;
 
-  posts.forEach(post => {
+  posts.forEach((post, index) => {
     createPage({
       path: `/blog/${post.slug}`.replace(/\/\/+/g, `/`),
       component: postT,
       context: {
         slug: post.slug,
+        prev: index === 0 ? null : posts[index - 1],
+        next: index === posts.length - 1 ? null : posts[index + 1],
+        postPrefix: `/blog`,
       },
     });
   });

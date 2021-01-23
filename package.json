@@ -14,7 +14,9 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@loadable/component": "^5.14.1",
     "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
     "@theme-ui/color": "^0.3.5",
     "@theme-ui/presets": "^0.3.5",
     "gatsby": "^2.26.1",
@@ -29,12 +31,18 @@
     "gatsby-plugin-sitemap": "^2.11.0",
     "gatsby-plugin-theme-ui": "^0.3.5",
     "gatsby-remark-images": "^3.10.0",
+    "gatsby-remark-prismjs": "^3.12.0",
     "gatsby-source-filesystem": "^2.10.0",
+    "gatsby-transformer-remark": "^2.15.0",
     "gatsby-transformer-sharp": "^2.11.0",
     "lodash.kebabcase": "^4.1.1",
+    "mdx-utils": "^0.2.0",
+    "prism-react-renderer": "^1.1.1",
+    "prismjs": "^1.23.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
+    "react-live": "^2.2.3",
     "theme-ui": "^0.3.5",
     "typewriter-effect": "^2.17.0"
   },
@@ -43,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+    "url": "https://github.com/ZellyPish/zellypish-blog-v2"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
