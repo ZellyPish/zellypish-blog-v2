@@ -1,6 +1,6 @@
 /* eslint arrow-body-style: 0 */
 
-module.exports = (title) => ({
+module.exports = title => ({
   query: `
     {
       site {
@@ -15,17 +15,17 @@ module.exports = (title) => ({
   `,
   feeds: [
     {
-      serialize: ({ query: { site, allPost } }) => {
-        return allPost.nodes.map((post) => {
+      serialize: ({ query: { site, allMdx } }) => {
+        return allMdx.nodes.map(post => {
           return {
-            title: post.title,
-            date: post.date,
+            title: post.frontmatter.title,
+            date: post.frontmatter.date,
             excerpt: post.excerpt,
             url: site.siteMetadata.siteUrl + post.slug,
             guid: site.siteMetadata.siteUrl + post.slug,
             custom_elements: [{ "content:encoded": post.html }],
-          }
-        })
+          };
+        });
       },
       query: `
         {
@@ -44,4 +44,4 @@ module.exports = (title) => ({
       title,
     },
   ],
-})
+});

@@ -1,6 +1,6 @@
-import { merge } from "theme-ui"
-import { transparentize } from "@theme-ui/color"
-import { tailwind } from "@theme-ui/presets"
+import { merge } from "theme-ui";
+import { transparentize } from "@theme-ui/color";
+import { tailwind } from "@theme-ui/presets";
 
 const theme = merge(tailwind, {
   useColorSchemeMediaQuery: true,
@@ -8,7 +8,7 @@ const theme = merge(tailwind, {
   colors: {
     primary: tailwind.colors.purple[7],
     secondary: `#5f6c80`,
-    toggleIcon: tailwind.colors.gray[8],
+    toggleIcon: tailwind.colors.yellow[3],
     heading: tailwind.colors.black,
     divide: tailwind.colors.gray[4],
     point: `#8668ed`,
@@ -203,6 +203,6 @@ const theme = merge(tailwind, {
       color: `text`,
     },
   },
-})
+});
 
-export default theme
+export default theme;
