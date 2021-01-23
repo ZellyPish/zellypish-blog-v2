@@ -6,7 +6,6 @@ import ItemTags from "./itemTags";
 import replaceSlashes from "../utils/replaceSlashes";
 
 const BlogListItem = ({ post, showTags = true }) => {
-  console.log(post);
   return (
     <Box mb={4}>
       <TLink

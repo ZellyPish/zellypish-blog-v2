@@ -7,9 +7,11 @@ import Layout from "./Layout";
 import SEO from "./seo";
 import replaceSlashes from "../utils/replaceSlashes";
 
-const Tags = ({ list }) => {
+const Tags = ({ data }) => {
   const tagsPath = `tags/`;
   const basePath = `/`;
+
+  const list = data.allMdx.group;
 
   return (
     <Layout>
@@ -17,7 +19,7 @@ const Tags = ({ list }) => {
       <Heading as="h1" variant="styles.h1">
         Tags
       </Heading>
-      <Box mt={[4, 5]}>
+      <Box my={[4, 5]}>
         {list.map(listItem => (
           <Flex
             key={listItem.fieldValue}
