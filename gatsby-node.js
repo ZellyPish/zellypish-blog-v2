@@ -213,14 +213,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   // });
 
   createPage({
-    path: `/${basePath}/blog/`.replace(/\/\/+/g, `/`),
-    component: blogT,
-    context: {
-      formatString,
-    },
-  });
-
-  createPage({
     path: `/${basePath}/tags`.replace(/\/\/+/g, `/`),
     component: tagsT,
   });
@@ -260,6 +252,21 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const posts = result.data.posts.nodes;
+
+  const postsPerPage = 6;
+  const numPages = Math.ceil(posts.length / postsPerPage);
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+      component: blogT,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    });
+  });
 
   posts.forEach((post, index) => {
     createPage({
