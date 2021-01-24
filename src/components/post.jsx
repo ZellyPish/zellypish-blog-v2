@@ -69,17 +69,42 @@ const Post = ({ data: { mdx }, pageContext }) => {
             <MDXRenderer>{mdx.body}</MDXRenderer>
           </Box>
         </section>
-        <Flex sx={{ justifyContent: `space-between`, mb: [4, 4, 5] }}>
+
+        <Flex
+          sx={{
+            justifyContent: `space-between`,
+            mb: [4, 4, 5],
+            flexDirection: [`column`, `row`, `row`],
+          }}
+        >
           {next && (
             <TLink
               as={Link}
               to={replaceSlashes(`/blog/${next.slug}/`)}
-              sx={{ width: `40%` }}
+              sx={{ width: [`100%`, `45%`, `45%`] }}
               variant="links.secondary"
             >
-              <Box sx={{ textAlign: `center` }}>
-                <Box sx={{ mb: [2] }}>Previous Page</Box>
-                <Box>{next.frontmatter.title}</Box>
+              <Box
+                sx={{
+                  textAlign: `center`,
+                  bg: `footer`,
+                  borderRadius: `1rem`,
+                  p: [1, 1, 2],
+                  my: [2, 2, 3],
+                }}
+              >
+                <Box sx={{ mb: [2] }}>{` < `}Previous Page</Box>
+                <Heading
+                  as="h5"
+                  variant="styles.h5"
+                  sx={{
+                    overflow: `hidden`,
+                    textOverflow: `ellipsis`,
+                    whiteSpace: `nowrap`,
+                  }}
+                >
+                  {next.frontmatter.title}
+                </Heading>
               </Box>
             </TLink>
           )}
@@ -88,16 +113,37 @@ const Post = ({ data: { mdx }, pageContext }) => {
             <TLink
               as={Link}
               to={replaceSlashes(`/blog/${prev.slug}/`)}
-              sx={{ width: `40%` }}
+              sx={{ width: [`100%`, `45%`, `45%`] }}
               variant="links.secondary"
             >
-              <Box sx={{ textAlign: `center` }}>
-                <Box sx={{ mb: [2] }}>Next Page</Box>
-                <Box>{prev.frontmatter.title}</Box>
+              <Box
+                sx={{
+                  textAlign: `center`,
+                  bg: `footer`,
+                  borderRadius: `1rem`,
+                  p: [1, 1, 2],
+                  my: [2, 2, 3],
+                }}
+              >
+                <Box sx={{ mb: [2] }}>Next Page{` > `}</Box>
+                <Box>
+                  <Heading
+                    as="h5"
+                    variant="styles.h5"
+                    sx={{
+                      overflow: `hidden`,
+                      textOverflow: `ellipsis`,
+                      whiteSpace: `nowrap`,
+                    }}
+                  >
+                    {prev.frontmatter.title}
+                  </Heading>
+                </Box>
               </Box>
             </TLink>
           )}
         </Flex>
+
         <Utterances />
         <Box sx={{ mb: [2, 2, 4] }} />
       </MDXProvider>

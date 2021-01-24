@@ -188,7 +188,7 @@ const theme = merge(tailwind, {
   },
   links: {
     secondary: {
-      color: `secondary`,
+      color: `text`,
       textDecoration: `none`,
       ":hover": {
         color: `heading`,
