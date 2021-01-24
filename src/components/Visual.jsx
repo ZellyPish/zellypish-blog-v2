@@ -2,6 +2,8 @@
 import { jsx, Flex, Image, Box } from "theme-ui";
 import Typewriter from "typewriter-effect";
 
+import Zepeto from "./Zepeto";
+
 import "./Visual.css";
 
 const Visual = () => {
@@ -43,7 +45,7 @@ const Visual = () => {
         />
       </div>
       <Box sx={{ width: [`100%`, `100%`, `40%`], float: `right` }}>
-        <Image src="images/mainZepeto.png" />
+        <Zepeto />
       </Box>
       <Box
         sx={{ position: `absolute`, height: [`75vh`, `80vh`], width: `100%` }}

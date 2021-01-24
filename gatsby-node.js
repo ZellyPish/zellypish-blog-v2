@@ -51,7 +51,23 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     },
   });
 
+  createFieldExtension({
+    name: `addFrontmatterField`,
+    args: {
+      name: `String!`,
+    },
+    extend({ name }) {
+      return {
+        resolve: addFrontmatterField(name),
+      };
+    },
+  });
+
   createTypes(`
+
+    interface Mdx @nodeInterface {
+      featuredImage: File @fileByRelativePath
+    }
 
     type PostTag {
       name: String

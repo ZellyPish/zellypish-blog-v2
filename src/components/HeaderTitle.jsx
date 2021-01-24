@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { Link } from "gatsby"
-import { jsx, Image } from "theme-ui"
-import useSiteMetadata from "../hooks/use-site-metadata"
+import { Link } from "gatsby";
+import { jsx, Image } from "theme-ui";
+import useSiteMetadata from "../hooks/use-site-metadata";
 
 const HeaderTitle = () => {
-  const { siteTitle } = useSiteMetadata()
+  const { siteTitle } = useSiteMetadata();
 
   return (
     <Link
@@ -12,9 +12,13 @@ const HeaderTitle = () => {
       aria-label={`${siteTitle} - Back to home`}
       sx={{ color: `#eae6fe`, lineHeight: `100%` }}
     >
-      <Image src="/logo.png" alt="ZellyPish" sx={{ width: `10rem` }} />
+      <Image
+        src="images/logo/logo.png"
+        alt="ZellyPish"
+        sx={{ width: `10rem` }}
+      />
     </Link>
-  )
-}
+  );
+};
 
-export default HeaderTitle
+export default HeaderTitle;
