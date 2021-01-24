@@ -1,4 +1,5 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx } from "theme-ui";
 import { useStaticQuery, graphql } from "gatsby";
 import Img from "gatsby-image";
 
@@ -13,10 +14,10 @@ import Img from "gatsby-image";
  * - `useStaticQuery`: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
-const Zepeto = () => {
+const Logo = () => {
   const data = useStaticQuery(graphql`
     query {
-      file(relativePath: { eq: "mainZepeto.png" }) {
+      file(relativePath: { eq: "logo.png" }) {
         childImageSharp {
           fluid(maxWidth: 1024) {
             ...GatsbyImageSharpFluid
@@ -30,7 +31,9 @@ const Zepeto = () => {
     return <div>Picture not found</div>;
   }
 
-  return <Img fluid={data.file.childImageSharp.fluid} />;
+  return (
+    <Img fluid={data.file.childImageSharp.fluid} sx={{ width: `10rem` }} />
+  );
 };
 
-export default Zepeto;
+export default Logo;
