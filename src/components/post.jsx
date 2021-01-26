@@ -37,7 +37,7 @@ const Post = ({ data: { mdx }, pageContext }) => {
           image={mdx.banner ? mdx.banner.childImageSharp.resize.src : undefined}
           pathname={mdx.slug}
         />
-        <Heading as="h1" variant="styles.h1">
+        <Heading as="h1" sx={{ mb: [4, 4, 5] }} variant="styles.h1">
           {mdx.frontmatter.title}
         </Heading>
         <p
