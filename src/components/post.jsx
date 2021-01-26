@@ -37,7 +37,7 @@ const Post = ({ data: { mdx }, pageContext }) => {
           image={mdx.banner ? mdx.banner.childImageSharp.resize.src : undefined}
           pathname={mdx.slug}
         />
-        <Heading as="h1" sx={{ mb: [4, 4, 5] }} variant="styles.h1">
+        <Heading as="h1" variant="styles.h1">
           {mdx.frontmatter.title}
         </Heading>
         <p
@@ -57,7 +57,7 @@ const Post = ({ data: { mdx }, pageContext }) => {
         {mdx.tags && <ItemTags tags={mdx.tags} />}
         <section
           sx={{
-            my: [2, 2, 4],
+            my: [4, 4, 5],
             ".gatsby-resp-image-wrapper": {
               my: [4, 4, 5],
               boxShadow: shadow.join(`, `),
